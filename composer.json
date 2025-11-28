@@ -1,0 +1,32 @@
+{
+    "name": "label84/laravel-nederland-postcode",
+    "version": "dev-master",
+    "authors": [
+      {
+        "name": "Label84",
+        "email": "info@label84.com"
+      }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Label84\\NederlandPostcode\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Label84\\NederlandPostcode\\PostcodeServiceProvider"
+            ],
+            "aliases": {
+                "NederlandPostcode": "Label84\\NederlandPostcode\\Facades\\NederlandPostcode"
+            }
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "require-dev": {
+        "laravel/pint": "^1.26",
+        "orchestra/testbench": "^10.8",
+        "larastan/larastan": "^3.8"
+    }
+}
