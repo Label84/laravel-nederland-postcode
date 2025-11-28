@@ -1,8 +1,10 @@
-# Laravel Nederland Postcode
+# Nederland Postcode Laravel
 
-`laravel-nederland-postcode` makes it easy to integrate Dutch postcode lookups into your Laravel application using the [Nederland Postcode API](https://nederlandpostcode.nl).
+![Nederland Postcode API](./docs/nederlandpostcodeapi.png)
 
-For more details about the API, visit the [Nederland Postcode API documentation](https://nederlandpostcode.nl).
+Nederland Postcode Laravel makes it easy to integrate Dutch address lookups into your Laravel application using the [Nederland Postcode API](https://nederlandpostcode.nl).
+
+Register for free to obtain a **test API key** at [nederlandpostcode.nl](https://nederlandpostcode.nl) to get started.
 
 - [Requirements](#requirements)
 - [Installation](#installation)
@@ -41,7 +43,11 @@ NEDERLAND_POSTCODE_API_KEY="your_api_key_here"
 
 ## Address Endpoint
 
-You can retrieve addresses by postcode and house number using the `addresses` endpoint.
+You can retrieve addresses by postcode and house number using the addresses endpoint.
+
+The `postcode` parameter is required, while `number` and `addition` are optional.
+
+The `attributes` parameter lets you include additional data in the response such as coordinates.
 
 ```php
 use Label84\NederlandPostcode\Facades\NederlandPostcode;
@@ -57,9 +63,26 @@ $addresses = NederlandPostcode::addresses()->get(
     );
 ```
 
-This will return a collection of addresses matching the provided postcode and house number. The `number` and `addition` parameters are optional.
+The above code will return an `AddressCollection` like this:
 
-The `attributes` parameter lets you include additional data in the response, e.g., `AddressAttributesEnum::COORDINATES` to get latitude and longitude.
+```php
+AddressCollection {
+    items: [
+        Address {
+            postcode: "1118BN",
+            number: 800,
+            street: "Schiphol Boulevard",
+            city: "Schiphol",
+            municipality: "Haarlemmermeer",
+            province: "Noord-Holland",
+            coordinates: Coordinates {
+                latitude: 52.30528553688755,
+                longitude: 4.750645160863609
+            }
+        }
+    ]
+}
+```
 
 ### Fetching multiple addresses
 
@@ -84,7 +107,7 @@ foreach ($addresses as $address) {
 
 ### Fetching a single address
 
-You can then use collection methods to work with the results:
+Same as above, but you can use the collection methods to work with the results:
 
 ```php
 use Label84\NederlandPostcode\Facades\NederlandPostcode;
