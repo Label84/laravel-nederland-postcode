@@ -46,7 +46,7 @@ class NederlandPostcodeClient
     /**
      * Fetch a list of addresses by postcode, number, and addition.
      *
-     * @param  array<string, string|AddressAttributesEnum>  $attributes
+     * @param  array<int|string, string|AddressAttributesEnum>  $attributes
      * @return AddressCollection<Address>
      */
     public function list(
@@ -66,7 +66,7 @@ class NederlandPostcodeClient
     /**
      * Fetch a single address by postcode, number, and addition.
      *
-     * @param  array<string, string|AddressAttributesEnum>  $attributes
+     * @param  array<int|string, string|AddressAttributesEnum>  $attributes
      *
      * @throws AddressNotFoundException
      * @throws MultipleAddressesFoundException

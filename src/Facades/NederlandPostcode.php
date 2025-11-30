@@ -9,8 +9,8 @@ use Label84\NederlandPostcode\Enums\AddressAttributesEnum;
 use Label84\NederlandPostcode\Resources\AddressesResource;
 
 /**
- * @method static Address find(string $postcode, string $number, ?string $addition = null, array<string, string|AddressAttributesEnum> $attributes = [])
- * @method static AddressCollection<Address> list(string $postcode, ?string $number = null, ?string $addition = null, array<string, string|AddressAttributesEnum> $attributes = [])
+ * @method static Address find(string $postcode, string $number, ?string $addition = null, array<int|string, string|AddressAttributesEnum> $attributes = [])
+ * @method static AddressCollection<Address> list(string $postcode, ?string $number = null, ?string $addition = null, array<int|string, string|AddressAttributesEnum> $attributes = [])
  * @method static AddressesResource addresses()
  *
  * @see \Label84\NederlandPostcode\NederlandPostcodeClient
