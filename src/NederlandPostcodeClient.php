@@ -4,6 +4,11 @@ namespace Label84\NederlandPostcode;
 
 use Illuminate\Http\Client\PendingRequest;
 use Illuminate\Support\Facades\Http;
+use Label84\NederlandPostcode\DTO\Address;
+use Label84\NederlandPostcode\DTO\AddressCollection;
+use Label84\NederlandPostcode\Enums\AddressAttributesEnum;
+use Label84\NederlandPostcode\Exceptions\AddressNotFoundException;
+use Label84\NederlandPostcode\Exceptions\MultipleAddressesFoundException;
 use Label84\NederlandPostcode\Resources\AddressesResource;
 
 class NederlandPostcodeClient
@@ -36,5 +41,55 @@ class NederlandPostcodeClient
     public function addresses(): AddressesResource
     {
         return new AddressesResource($this);
+    }
+
+    /**
+     * Fetch a list of addresses by postcode, number, and addition.
+     *
+     * @param  array<string, string|AddressAttributesEnum>  $attributes
+     * @return AddressCollection<Address>
+     */
+    public function list(
+        string $postcode,
+        ?string $number = null,
+        ?string $addition = null,
+        array $attributes = [],
+    ): AddressCollection {
+        return $this->addresses()->get(
+            postcode: $postcode,
+            number: $number,
+            addition: $addition,
+            attributes: $attributes,
+        );
+    }
+
+    /**
+     * Fetch a single address by postcode, number, and addition.
+     *
+     * @param  array<string, string|AddressAttributesEnum>  $attributes
+     *
+     * @throws AddressNotFoundException
+     * @throws MultipleAddressesFoundException
+     */
+    public function find(
+        string $postcode,
+        string $number,
+        ?string $addition = null,
+        array $attributes = [],
+    ): Address {
+        $addresses = $this->addresses()->get(
+            postcode: $postcode,
+            number: $number,
+            addition: $addition,
+            attributes: $attributes,
+        );
+
+        if ($addresses->isEmpty()) {
+            throw new AddressNotFoundException;
+        } elseif ($addresses->count() > 1) {
+            throw new MultipleAddressesFoundException;
+        }
+
+        return $addresses->sole();
     }
 }

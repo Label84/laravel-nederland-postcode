@@ -2,7 +2,7 @@
 
 ![Nederland Postcode API](./docs/nederlandpostcodeapi.png)
 
-Nederland Postcode Laravel makes it easy to integrate Dutch address lookups into your Laravel application using the [Nederland Postcode API](https://nederlandpostcode.nl).
+Nederland Postcode Laravel makes it easy to integrate Dutch address validations into your Laravel application using the [Nederland Postcode API](https://nederlandpostcode.nl).
 
 Register for free to obtain a **test API key** at [nederlandpostcode.nl](https://nederlandpostcode.nl) to get started.
 
@@ -10,8 +10,8 @@ Register for free to obtain a **test API key** at [nederlandpostcode.nl](https:/
 - [Installation](#installation)
 - [Usage](#usage)
   - [Address Endpoint](#address-endpoint)
-    - [Fetching multiple addresses](#fetching-multiple-addresses)
-    - [Fetching a single address](#fetching-a-single-address)
+    - [Single Address](#single-address)
+    - [Multiple Addresses](#multiple-addresses)
   - [Error Handling](#error-handling)
 
 ## Requirements
@@ -43,31 +43,88 @@ NEDERLAND_POSTCODE_API_KEY="your_api_key_here"
 
 ## Address Endpoint
 
-You can retrieve addresses by postcode and house number using the addresses endpoint.
+The address endpoint allows you to fetch address information from the Nederland Postcode API.
 
-The `postcode` parameter is required, while `number` and `addition` are optional.
+You can find addresses using either the `find` method for a single address or the `list` method for multiple addresses. When you provide only the `postcode`, the `list` method will return all addresses associated with that postcode.
 
-The `attributes` parameter lets you include additional data in the response such as coordinates.
+The following optional attributes can be requested to be included in the response:
+
+- `coordinates`: Includes latitude and longitude of the address.
+
+### Single Address
+
+To fetch a single address for a given postcode and house number, you can use the `find` method.
+
+The `postcode` and `number` parameters are required to fetch a single address.
 
 ```php
 use Label84\NederlandPostcode\Facades\NederlandPostcode;
-use Label84\NederlandPostcode\Enums\AddressAttributesEnum;
 
-$addresses = NederlandPostcode::addresses()->get(
+$address = NederlandPostcode::find(
         postcode: '1118BN',
         number: 800,
         addition: null,
         attributes: [
-            AddressAttributesEnum::COORDINATES,
+            'coordinates',
         ]
     );
 ```
 
-The above code will return an `AddressCollection` like this:
+This will return an `Address` object like this:
+
+```php
+Address {
+    postcode: "1118BN",
+    number: 800,
+    street: "Schiphol Boulevard",
+    city: "Schiphol",
+    municipality: "Haarlemmermeer",
+    province: "Noord-Holland",
+    coordinates: Coordinates {
+        latitude: 52.30528553688755,
+        longitude: 4.750645160863609
+    }
+}
+```
+
+When no address is found for the given postcode and number, an `AddressNotFoundException` is thrown. If multiple addresses are found, a `MultipleAddressesFoundException` is thrown.
+
+### Multiple Addresses
+
+To fetch multiple addresses for a given postcode, you can use the `list` method.
+
+The `postcode` parameter is required. The `number` and `addition` parameters are optional.
+
+```php
+use Label84\NederlandPostcode\Facades\NederlandPostcode;
+
+$addresses = NederlandPostcode::list(
+        postcode: '1118BN',
+        number: null,
+        addition: null,
+        attributes: [
+            'coordinates',
+        ]
+    );
+```
+
+This will return an `AddressCollection` object like this:
 
 ```php
 AddressCollection {
     items: [
+        Address {
+            postcode: "1118BN",
+            number: 701,
+            street: "Schiphol Boulevard",
+            city: "Schiphol",
+            municipality: "Haarlemmermeer",
+            province: "Noord-Holland",
+            coordinates: Coordinates {
+                latitude: 52.30703569036619,
+                longitude: 4.755174782205992
+            }
+        },
         Address {
             postcode: "1118BN",
             number: 800,
@@ -84,50 +141,6 @@ AddressCollection {
 }
 ```
 
-### Fetching multiple addresses
-
-The `get` method retrieves all addresses matching the provided criteria:
-
-```php
-use Label84\NederlandPostcode\Facades\NederlandPostcode;
-
-$addresses = NederlandPostcode::addresses()->get(
-        postcode: '1118BN',
-        number: null,
-        addition: null,
-        attributes: [
-            AddressAttributesEnum::COORDINATES,
-        ]
-    );
-
-foreach ($addresses as $address) {
-    // process each address
-}
-```
-
-### Fetching a single address
-
-Same as above, but you can use the collection methods to work with the results:
-
-```php
-use Label84\NederlandPostcode\Facades\NederlandPostcode;
-
-$addresses = NederlandPostcode::addresses()->get(
-        postcode: '1118BN',
-        number: 800,
-        addition: null,
-        attributes: [
-            AddressAttributesEnum::COORDINATES,
-        ]
-    );
-
-$addresses->first(); // get the first address from the collection
-$addresses->count() === 1; // check if exactly one address was found
-$addresses->isEmpty(); // check if no addresses were found
-$addresses->isNotEmpty(); // check if addresses were found
-$addresses->sole(); // gets the single address found or throws an exception if zero or multiple addresses found
-```
-
 ## Error Handling
 
 The package throws a `NederlandPostcodeException` for any errors encountered during the API request. You can catch this exception to handle errors gracefully:
@@ -136,7 +149,7 @@ The package throws a `NederlandPostcodeException` for any errors encountered dur
 use Label84\NederlandPostcode\Exceptions\NederlandPostcodeException;
 
 try {
-    $addresses = NederlandPostcode::addresses()->get(
+    $addresses = NederlandPostcode::find(
         postcode: 'INVALID',
         number: 123,
         addition: null,
@@ -145,6 +158,10 @@ try {
     // handle error
 }
 ```
+
+When calling the `find` method, if no address is found, an `AddressNotFoundException` is thrown. If multiple addresses are found, a `MultipleAddressesFoundException` is thrown.
+
+When a network or HTTP error occurs during the API request, a `NederlandPostcodeRequestException` is thrown, which wraps the original `RequestException`.
 
 ## Contributing
 

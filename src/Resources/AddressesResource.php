@@ -10,7 +10,7 @@ use Label84\NederlandPostcode\Factories\AddressCollectionFactory;
 class AddressesResource extends BaseResource
 {
     /**
-     * @param  array<AddressAttributesEnum>  $attributes
+     * @param  array<AddressAttributesEnum|string>  $attributes
      */
     public function get(
         string $postcode,
@@ -27,7 +27,7 @@ class AddressesResource extends BaseResource
                 'number' => $number,
                 'addition' => $addition,
                 'attributes' => array_map(
-                    static fn (AddressAttributesEnum $attr) => $attr->value,
+                    static fn (AddressAttributesEnum|string $attr) => $attr instanceof AddressAttributesEnum ? $attr->value : $attr,
                     $attributes
                 ),
             ],
