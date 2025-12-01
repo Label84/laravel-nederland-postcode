@@ -173,6 +173,10 @@ When a network or HTTP error occurs during the API request, a `NederlandPostcode
 ./vendor/bin/pint
 ```
 
+```bash
+./vendor/bin/phpunit tests
+```
+
 ## License
 
 [MIT](https://opensource.org/licenses/MIT)

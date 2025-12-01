@@ -4,7 +4,7 @@ namespace Label84\NederlandPostcode;
 
 use Illuminate\Support\ServiceProvider;
 
-class PostcodeServiceProvider extends ServiceProvider
+class NederlandPostcodeServiceProvider extends ServiceProvider
 {
     public function register(): void
     {

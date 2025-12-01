@@ -51,7 +51,7 @@ class NederlandPostcodeClient
      */
     public function list(
         string $postcode,
-        ?string $number = null,
+        ?int $number = null,
         ?string $addition = null,
         array $attributes = [],
     ): AddressCollection {
@@ -73,7 +73,7 @@ class NederlandPostcodeClient
      */
     public function find(
         string $postcode,
-        string $number,
+        int $number,
         ?string $addition = null,
         array $attributes = [],
     ): Address {
