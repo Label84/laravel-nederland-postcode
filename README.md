@@ -12,7 +12,8 @@ Register for free to obtain a **test API key** at [nederlandpostcode.nl](https:/
   - [Address Endpoint](#address-endpoint)
     - [Single Address](#single-address)
     - [Multiple Addresses](#multiple-addresses)
-  - [Error Handling](#error-handling)
+  - [Quota Endpoint](#quota-endpoint)
+- [Error Handling](#error-handling)
 
 ## Requirements
 
@@ -41,7 +42,7 @@ NEDERLAND_POSTCODE_API_KEY="your_api_key_here"
 
 ## Usage
 
-## Address Endpoint
+### Address Endpoint
 
 The address endpoint allows you to fetch address information from the Nederland Postcode API.
 
@@ -51,7 +52,7 @@ The following optional attributes can be requested to be included in the respons
 
 - `coordinates`: Includes latitude and longitude of the address.
 
-### Single Address
+#### Single Address
 
 To fetch a single address for a given postcode and house number, you can use the `find` method.
 
@@ -89,7 +90,7 @@ Address {
 
 When no address is found for the given postcode and number, an `AddressNotFoundException` is thrown. If multiple addresses are found, a `MultipleAddressesFoundException` is thrown.
 
-### Multiple Addresses
+#### Multiple Addresses
 
 To fetch multiple addresses for a given postcode, you can use the `list` method.
 
@@ -138,6 +139,28 @@ AddressCollection {
             }
         }
     ]
+}
+```
+
+### Quota Endpoint
+
+The quota endpoint allows you to check your current API usage and limits. This endpoint does not increase your usage quota.
+
+> [!NOTE]
+> Values may lag behind the actual usage. They’re cached for up to five minutes, so the `used` and `limit` numbers might not be fully up-to-date.
+
+```php
+use Label84\NederlandPostcode\Facades\NederlandPostcode;
+
+$quota = NederlandPostcode::usage();
+```
+
+This will return an `Quota` object like this:
+
+```php
+Quota {
+    used: 1500,
+    limit: 10000,
 }
 ```
 

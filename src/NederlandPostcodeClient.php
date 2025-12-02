@@ -6,10 +6,12 @@ use Illuminate\Http\Client\PendingRequest;
 use Illuminate\Support\Facades\Http;
 use Label84\NederlandPostcode\DTO\Address;
 use Label84\NederlandPostcode\DTO\AddressCollection;
+use Label84\NederlandPostcode\DTO\Quota;
 use Label84\NederlandPostcode\Enums\AddressAttributesEnum;
 use Label84\NederlandPostcode\Exceptions\AddressNotFoundException;
 use Label84\NederlandPostcode\Exceptions\MultipleAddressesFoundException;
 use Label84\NederlandPostcode\Resources\AddressesResource;
+use Label84\NederlandPostcode\Resources\QuotaResource;
 
 class NederlandPostcodeClient
 {
@@ -41,6 +43,11 @@ class NederlandPostcodeClient
     public function addresses(): AddressesResource
     {
         return new AddressesResource($this);
+    }
+
+    public function quota(): QuotaResource
+    {
+        return new QuotaResource($this);
     }
 
     /**
@@ -91,5 +98,13 @@ class NederlandPostcodeClient
         }
 
         return $addresses->sole();
+    }
+
+    /**
+     * Fetch the current quota usage.
+     */
+    public function usage(): Quota
+    {
+        return $this->quota()->get();
     }
 }

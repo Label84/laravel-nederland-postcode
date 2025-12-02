@@ -5,11 +5,13 @@ namespace Label84\NederlandPostcode\Tests;
 use Label84\NederlandPostcode\DTO\Address;
 use Label84\NederlandPostcode\DTO\AddressCollection;
 use Label84\NederlandPostcode\DTO\Coordinates;
+use Label84\NederlandPostcode\DTO\Quota;
 use Label84\NederlandPostcode\Exceptions\AddressNotFoundException;
 use Label84\NederlandPostcode\Exceptions\MultipleAddressesFoundException;
 use Label84\NederlandPostcode\NederlandPostcodeClient;
 use Label84\NederlandPostcode\NederlandPostcodeServiceProvider;
 use Label84\NederlandPostcode\Resources\AddressesResource;
+use Label84\NederlandPostcode\Resources\QuotaResource;
 
 class TestCase extends \Orchestra\Testbench\TestCase
 {
@@ -29,13 +31,20 @@ class TestCase extends \Orchestra\Testbench\TestCase
 
     protected function mockNederlandPostcodeClient(): void
     {
-        $mockClient = $this->createMock(NederlandPostcodeClient::class, [
-            'addresses',
-            'find',
-            'list',
-        ]);
+        $mockClient = $this
+            ->getMockBuilder(NederlandPostcodeClient::class)
+            ->disableOriginalConstructor()
+            ->onlyMethods([
+                'addresses',
+                'quota',
+                'find',
+                'list',
+                'usage',
+            ])
+            ->getMock();
 
         $mockAddresses = $this->createMock(AddressesResource::class);
+        $mockQuota = $this->createMock(QuotaResource::class);
 
         $mockAddresses
             ->method('get')
@@ -49,9 +58,22 @@ class TestCase extends \Orchestra\Testbench\TestCase
                 return new AddressCollection([]);
             });
 
+        $mockQuota
+            ->method('get')
+            ->willReturnCallback(function () {
+                return new Quota(
+                    used: 1500,
+                    limit: 10000,
+                );
+            });
+
         $mockClient
             ->method('addresses')
             ->willReturn($mockAddresses);
+
+        $mockClient
+            ->method('quota')
+            ->willReturn($mockQuota);
 
         $mockClient
             ->method('find')
@@ -73,6 +95,15 @@ class TestCase extends \Orchestra\Testbench\TestCase
                 }
 
                 return new AddressCollection([]);
+            });
+
+        $mockClient
+            ->method('usage')
+            ->willReturnCallback(function () {
+                return new Quota(
+                    used: 1500,
+                    limit: 10000,
+                );
             });
 
         $this->app->instance(NederlandPostcodeClient::class, $mockClient);

@@ -4,6 +4,7 @@ namespace Label84\NederlandPostcode\Tests;
 
 use Label84\NederlandPostcode\DTO\Address;
 use Label84\NederlandPostcode\DTO\AddressCollection;
+use Label84\NederlandPostcode\DTO\Quota;
 use Label84\NederlandPostcode\Exceptions\AddressNotFoundException;
 use Label84\NederlandPostcode\Exceptions\MultipleAddressesFoundException;
 use Label84\NederlandPostcode\NederlandPostcodeClient;
@@ -57,5 +58,18 @@ class NederlandPostcodeClientTest extends TestCase
 
         $this->assertInstanceOf(AddressCollection::class, $result);
         $this->assertCount(3, $result);
+    }
+
+    public function test_usage(): void
+    {
+        $result = app(NederlandPostcodeClient::class)
+            ->usage();
+
+        $this->assertInstanceOf(Quota::class, $result);
+
+        $quota = $result;
+
+        $this->assertEquals(1500, $quota->used);
+        $this->assertEquals(10000, $quota->limit);
     }
 }

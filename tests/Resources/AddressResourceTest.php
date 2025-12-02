@@ -8,7 +8,7 @@ use Label84\NederlandPostcode\Tests\TestCase;
 
 class AddressResourceTest extends TestCase
 {
-    public function test_single_result(): void
+    public function test_get_single_result(): void
     {
         $result = app(NederlandPostcodeClient::class)
             ->addresses()
@@ -22,7 +22,7 @@ class AddressResourceTest extends TestCase
         $this->assertCount(1, $result);
     }
 
-    public function test_multiple_results(): void
+    public function test_get_multiple_results(): void
     {
         $result = app(NederlandPostcodeClient::class)
             ->addresses()
