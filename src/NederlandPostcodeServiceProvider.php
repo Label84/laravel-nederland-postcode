@@ -10,11 +10,11 @@ class NederlandPostcodeServiceProvider extends ServiceProvider
     {
         $this->app->singleton(NederlandPostcodeClient::class, function () {
             return new NederlandPostcodeClient(
-                baseUrl: (string) config('nederland-postcode.base_url'), // @phpstan-ignore cast.string
-                key: (string) config('nederland-postcode.api_key'), // @phpstan-ignore cast.string
-                timeout: (int) config('nederland-postcode.timeout'), // @phpstan-ignore cast.int
-                retryTimes: (int) config('nederland-postcode.retry_times'), // @phpstan-ignore cast.int
-                retrySleep: (int) config('nederland-postcode.retry_sleep'), // @phpstan-ignore cast.int
+                baseUrl: (string) config('nederland-postcode.base_url'),
+                key: (string) config('nederland-postcode.api_key'),
+                timeout: (int) config('nederland-postcode.timeout'),
+                retryTimes: (int) config('nederland-postcode.retry_times'),
+                retrySleep: (int) config('nederland-postcode.retry_sleep'),
             );
         });
     }

@@ -33,6 +33,6 @@
         "laravel/pint": "^1.26",
         "orchestra/testbench": "^10.8",
         "larastan/larastan": "^3.8",
-        "phpunit/phpunit": "^11.5"
+        "phpunit/phpunit": "^12.4"
     }
 }
