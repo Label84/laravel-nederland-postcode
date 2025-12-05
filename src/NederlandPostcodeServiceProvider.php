@@ -8,8 +8,8 @@ class NederlandPostcodeServiceProvider extends ServiceProvider
 {
     public function register(): void
     {
-        $this->app->singleton(NederlandPostcodeClient::class, function () {
-            return new NederlandPostcodeClient(
+        $this->app->singleton(NederlandPostcode::class, function () {
+            return new NederlandPostcode(
                 key: (string) config('nederland-postcode.api_key'),
                 baseUrl: (string) config('nederland-postcode.base_url'),
                 timeout: (int) config('nederland-postcode.timeout'),

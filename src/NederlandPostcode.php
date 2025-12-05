@@ -12,7 +12,7 @@ use Label84\NederlandPostcode\NederlandPostcodeClient as CoreClient;
 use Label84\NederlandPostcode\Resources\AddressesResource;
 use Label84\NederlandPostcode\Resources\QuotaResource;
 
-class NederlandPostcodeClient
+class NederlandPostcode
 {
     protected CoreClient $core;
 

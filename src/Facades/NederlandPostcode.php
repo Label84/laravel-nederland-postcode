@@ -23,6 +23,6 @@ class NederlandPostcode extends Facade
 {
     protected static function getFacadeAccessor(): string
     {
-        return \Label84\NederlandPostcodeLaravel\NederlandPostcodeClient::class;
+        return \Label84\NederlandPostcodeLaravel\NederlandPostcode::class;
     }
 }
