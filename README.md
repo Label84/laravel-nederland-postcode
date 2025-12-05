@@ -4,6 +4,8 @@
 
 Nederland Postcode Laravel makes it easy to integrate Dutch address validations into your Laravel application using the [Nederland Postcode API](https://nederlandpostcode.nl).
 
+This is a Laravel wrapper for the [Nederland Postcode PHP](https://github.com/Label84/php-nederland-postcode) package.
+
 Register for free to obtain a **test API key** at [nederlandpostcode.nl](https://nederlandpostcode.nl) to get started.
 
 - [Requirements](#requirements)
@@ -31,7 +33,7 @@ composer require label84/laravel-nederland-postcode
 Publish the configuration file:
 
 ```bash
-php artisan vendor:publish --provider="Label84\NederlandPostcode\PostcodeServiceProvider" --tag="config"
+php artisan vendor:publish --provider="Label84\NederlandPostcodeLaravel\NederlandPostcodeServiceProvider" --tag="config"
 ```
 
 Add your API key to your `.env` file:
@@ -59,7 +61,7 @@ To fetch a single address for a given postcode and house number, you can use the
 The `postcode` and `number` parameters are required to fetch a single address.
 
 ```php
-use Label84\NederlandPostcode\Facades\NederlandPostcode;
+use Label84\NederlandPostcodeLaravel\Facades\NederlandPostcode;
 
 $address = NederlandPostcode::find(
         postcode: '1118BN',
@@ -97,7 +99,7 @@ To fetch multiple addresses for a given postcode, you can use the `list` method.
 The `postcode` parameter is required. The `number` and `addition` parameters are optional.
 
 ```php
-use Label84\NederlandPostcode\Facades\NederlandPostcode;
+use Label84\NederlandPostcodeLaravel\Facades\NederlandPostcode;
 
 $addresses = NederlandPostcode::list(
         postcode: '1118BN',
@@ -150,7 +152,7 @@ The quota endpoint allows you to check your current API usage and limits. This e
 > Values may lag behind the actual usage. They’re cached for up to five minutes, so the `used` and `limit` numbers might not be fully up-to-date.
 
 ```php
-use Label84\NederlandPostcode\Facades\NederlandPostcode;
+use Label84\NederlandPostcodeLaravel\Facades\NederlandPostcode;
 
 $quota = NederlandPostcode::usage();
 ```
@@ -169,7 +171,7 @@ Quota {
 The package throws a `NederlandPostcodeException` for any errors encountered during the API request. You can catch this exception to handle errors gracefully:
 
 ```php
-use Label84\NederlandPostcode\Exceptions\NederlandPostcodeException;
+use Label84\NederlandPostcodeLaravel\Exceptions\NederlandPostcodeException;
 
 try {
     $addresses = NederlandPostcode::find(
@@ -197,7 +199,7 @@ When a network or HTTP error occurs during the API request, a `NederlandPostcode
 ```
 
 ```bash
-./vendor/bin/phpunit tests
+./vendor/bin/phpunit
 ```
 
 ## License

@@ -1,6 +1,6 @@
 <?php
 
-namespace Label84\NederlandPostcode\Tests;
+namespace Label84\NederlandPostcodeLaravel\Tests;
 
 use Label84\NederlandPostcode\DTO\Address;
 use Label84\NederlandPostcode\DTO\AddressCollection;
@@ -9,9 +9,9 @@ use Label84\NederlandPostcode\DTO\Quota;
 use Label84\NederlandPostcode\Exceptions\AddressNotFoundException;
 use Label84\NederlandPostcode\Exceptions\MultipleAddressesFoundException;
 use Label84\NederlandPostcode\NederlandPostcodeClient;
-use Label84\NederlandPostcode\NederlandPostcodeServiceProvider;
 use Label84\NederlandPostcode\Resources\AddressesResource;
 use Label84\NederlandPostcode\Resources\QuotaResource;
+use Label84\NederlandPostcodeLaravel\NederlandPostcodeServiceProvider;
 
 class TestCase extends \Orchestra\Testbench\TestCase
 {
@@ -79,7 +79,7 @@ class TestCase extends \Orchestra\Testbench\TestCase
             ->method('find')
             ->willReturnCallback(function (string $postcode, int $number, ?array $addition, $attributes = []) {
                 if ($postcode === '1118BN' && $number === 800) {
-                    return $this->singleAddressResponse()->first();
+                    return $this->singleAddressResponse()->all()[0];
                 } elseif ($postcode === '1118BN' && $number === 999) {
                     throw new AddressNotFoundException;
                 }

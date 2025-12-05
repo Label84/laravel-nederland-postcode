@@ -1,6 +1,6 @@
 <?php
 
-namespace Label84\NederlandPostcode;
+namespace Label84\NederlandPostcodeLaravel;
 
 use Illuminate\Support\ServiceProvider;
 
@@ -10,11 +10,9 @@ class NederlandPostcodeServiceProvider extends ServiceProvider
     {
         $this->app->singleton(NederlandPostcodeClient::class, function () {
             return new NederlandPostcodeClient(
-                baseUrl: (string) config('nederland-postcode.base_url'),
                 key: (string) config('nederland-postcode.api_key'),
+                baseUrl: (string) config('nederland-postcode.base_url'),
                 timeout: (int) config('nederland-postcode.timeout'),
-                retryTimes: (int) config('nederland-postcode.retry_times'),
-                retrySleep: (int) config('nederland-postcode.retry_sleep'),
             );
         });
     }

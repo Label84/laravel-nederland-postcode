@@ -1,53 +1,46 @@
 <?php
 
-namespace Label84\NederlandPostcode;
+namespace Label84\NederlandPostcodeLaravel;
 
-use Illuminate\Http\Client\PendingRequest;
-use Illuminate\Support\Facades\Http;
 use Label84\NederlandPostcode\DTO\Address;
 use Label84\NederlandPostcode\DTO\AddressCollection;
 use Label84\NederlandPostcode\DTO\Quota;
 use Label84\NederlandPostcode\Enums\AddressAttributesEnum;
 use Label84\NederlandPostcode\Exceptions\AddressNotFoundException;
 use Label84\NederlandPostcode\Exceptions\MultipleAddressesFoundException;
+use Label84\NederlandPostcode\NederlandPostcodeClient as CoreClient;
 use Label84\NederlandPostcode\Resources\AddressesResource;
 use Label84\NederlandPostcode\Resources\QuotaResource;
 
 class NederlandPostcodeClient
 {
+    protected CoreClient $core;
+
+    /**
+     * @param  array<string, string>  $headers
+     */
     public function __construct(
-        public string $baseUrl,
-        public string $key,
-        public int $timeout,
-        public ?int $retryTimes = null,
-        public ?int $retrySleep = null,
-    ) {}
-
-    public function makeRequest(): PendingRequest
-    {
-        $request = Http::withHeaders([
-            //
-        ])
-            ->withToken($this->key)
-            ->acceptJson()
-            ->baseUrl($this->baseUrl)
-            ->timeout($this->timeout);
-
-        if ($this->retryTimes != null && $this->retrySleep != null) {
-            $request->retry($this->retryTimes, $this->retrySleep);
-        }
-
-        return $request;
+        string $key,
+        string $baseUrl = \Label84\NederlandPostcode\NederlandPostcodeClient::DEFAULT_BASE_URL,
+        int $timeout = 5,
+        array $headers = []
+    ) {
+        $this->core = new \Label84\NederlandPostcode\NederlandPostcodeClient(
+            key: $key,
+            baseUrl: $baseUrl,
+            timeout: $timeout,
+            headers: $headers
+        );
     }
 
     public function addresses(): AddressesResource
     {
-        return new AddressesResource($this);
+        return new AddressesResource($this->core);
     }
 
     public function quota(): QuotaResource
     {
-        return new QuotaResource($this);
+        return new QuotaResource($this->core);
     }
 
     /**
@@ -60,13 +53,13 @@ class NederlandPostcodeClient
         string $postcode,
         ?int $number = null,
         ?string $addition = null,
-        array $attributes = [],
+        array $attributes = []
     ): AddressCollection {
-        return $this->addresses()->get(
+        return $this->core->list(
             postcode: $postcode,
             number: $number,
             addition: $addition,
-            attributes: $attributes,
+            attributes: $attributes
         );
     }
 
@@ -82,22 +75,14 @@ class NederlandPostcodeClient
         string $postcode,
         int $number,
         ?string $addition = null,
-        array $attributes = [],
+        array $attributes = []
     ): Address {
-        $addresses = $this->addresses()->get(
+        return $this->core->find(
             postcode: $postcode,
             number: $number,
             addition: $addition,
-            attributes: $attributes,
+            attributes: $attributes
         );
-
-        if ($addresses->isEmpty()) {
-            throw new AddressNotFoundException;
-        } elseif ($addresses->count() > 1) {
-            throw new MultipleAddressesFoundException;
-        }
-
-        return $addresses->sole();
     }
 
     /**
