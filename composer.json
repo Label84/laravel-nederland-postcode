@@ -1,6 +1,8 @@
 {
     "name": "label84/laravel-nederland-postcode",
-    "version": "dev-master",
+    "description": "Integrate Dutch address validations into your Laravel application using the Nederland Postcode API.",
+    "type": "library",
+    "license": "MIT",
     "authors": [
       {
         "name": "Label84",
@@ -8,7 +10,7 @@
       }
     ],
     "require": {
-        "label84/php-nederland-postcode": "dev-master"
+        "label84/php-nederland-postcode": "^1.0"
     },
     "require-dev": {
         "laravel/pint": "^1.26",
@@ -26,12 +28,6 @@
             "Label84\\NederlandPostcodeLaravel\\Tests\\": "tests"
         }
     },
-    "repositories": [
-        {
-            "type": "path",
-            "url": "../../../PHP/packages/php-nederland-postcode"
-        }
-    ],
     "extra": {
         "laravel": {
             "providers": [

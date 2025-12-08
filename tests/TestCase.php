@@ -6,8 +6,6 @@ use Label84\NederlandPostcode\DTO\Address;
 use Label84\NederlandPostcode\DTO\AddressCollection;
 use Label84\NederlandPostcode\DTO\Coordinates;
 use Label84\NederlandPostcode\DTO\Quota;
-use Label84\NederlandPostcode\Exceptions\AddressNotFoundException;
-use Label84\NederlandPostcode\Exceptions\MultipleAddressesFoundException;
 use Label84\NederlandPostcode\NederlandPostcodeClient;
 use Label84\NederlandPostcode\Resources\AddressesResource;
 use Label84\NederlandPostcode\Resources\QuotaResource;
@@ -31,33 +29,18 @@ class TestCase extends \Orchestra\Testbench\TestCase
 
     protected function mockNederlandPostcodeClient(): void
     {
-        $mockClient = $this
-            ->getMockBuilder(NederlandPostcodeClient::class)
-            ->disableOriginalConstructor()
-            ->onlyMethods([
-                'addresses',
-                'quota',
-                'find',
-                'list',
-                'usage',
-            ])
-            ->getMock();
-
-        $mockAddresses = $this->createMock(AddressesResource::class);
-        $mockQuota = $this->createMock(QuotaResource::class);
-
+        $mockAddresses = $this->createStub(AddressesResource::class);
         $mockAddresses
             ->method('get')
             ->willReturnCallback(function (string $postcode, ?int $number, ?array $addition, $attributes = []) {
-                if ($postcode === '1118BN' && $number === 800) {
-                    return $this->singleAddressResponse();
-                } elseif ($postcode === '1118BN' && $number === null) {
-                    return $this->multipleAddressesResponse();
-                }
-
-                return new AddressCollection([]);
+                return match (true) {
+                    $postcode === '1118BN' && $number === 800 => $this->singleAddressResponse(),
+                    $postcode === '1118BN' && ($number === null || $number === 0) => $this->multipleAddressesResponse(),
+                    default => new AddressCollection([]),
+                };
             });
 
+        $mockQuota = $this->createStub(QuotaResource::class);
         $mockQuota
             ->method('get')
             ->willReturnCallback(function () {
@@ -67,6 +50,7 @@ class TestCase extends \Orchestra\Testbench\TestCase
                 );
             });
 
+        $mockClient = $this->createStub(NederlandPostcodeClient::class);
         $mockClient
             ->method('addresses')
             ->willReturn($mockAddresses);
@@ -75,38 +59,31 @@ class TestCase extends \Orchestra\Testbench\TestCase
             ->method('quota')
             ->willReturn($mockQuota);
 
-        $mockClient
-            ->method('find')
-            ->willReturnCallback(function (string $postcode, int $number, ?array $addition, $attributes = []) {
-                if ($postcode === '1118BN' && $number === 800) {
-                    return $this->singleAddressResponse()->all()[0];
-                } elseif ($postcode === '1118BN' && $number === 999) {
-                    throw new AddressNotFoundException;
+        $this->app->instance(
+            NederlandPostcodeClient::class,
+            new class($mockAddresses, $mockQuota) extends NederlandPostcodeClient
+            {
+                public AddressesResource $addressesResource;
+
+                public QuotaResource $quotaResource;
+
+                public function __construct($addresses, $quota)
+                {
+                    $this->addressesResource = $addresses;
+                    $this->quotaResource = $quota;
                 }
 
-                throw new MultipleAddressesFoundException;
-            });
-
-        $mockClient
-            ->method('list')
-            ->willReturnCallback(function (string $postcode, ?int $number, ?array $addition, $attributes = []) {
-                if ($postcode === '1118BN') {
-                    return $this->multipleAddressesResponse();
+                public function addresses(): AddressesResource
+                {
+                    return $this->addressesResource;
                 }
 
-                return new AddressCollection([]);
-            });
-
-        $mockClient
-            ->method('usage')
-            ->willReturnCallback(function () {
-                return new Quota(
-                    used: 1500,
-                    limit: 10000,
-                );
-            });
-
-        $this->app->instance(NederlandPostcodeClient::class, $mockClient);
+                public function quota(): QuotaResource
+                {
+                    return $this->quotaResource;
+                }
+            }
+        );
     }
 
     private function singleAddressResponse(): AddressCollection
