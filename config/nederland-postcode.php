@@ -2,7 +2,7 @@
 
 return [
 
-    'base_url' => env('NEDERLAND_POSTCODE_BASE_URL', 'https://api.nederlandpostcode.com/v1/'),
+    'base_url' => env('NEDERLAND_POSTCODE_BASE_URL', 'https://api.nederlandpostcode.nl'),
 
     'api_key' => env('NEDERLAND_POSTCODE_API_KEY'),
 

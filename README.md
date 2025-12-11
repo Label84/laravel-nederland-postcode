@@ -171,7 +171,7 @@ Quota {
 The package throws a `NederlandPostcodeException` for any errors encountered during the API request. You can catch this exception to handle errors gracefully:
 
 ```php
-use Label84\NederlandPostcode\Laravel\Exceptions\NederlandPostcodeException;
+use Label84\NederlandPostcode\Exceptions\NederlandPostcodeException;
 
 try {
     $addresses = NederlandPostcode::find(
