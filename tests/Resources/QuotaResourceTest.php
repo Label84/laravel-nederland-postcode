@@ -1,10 +1,10 @@
 <?php
 
-namespace Label84\NederlandPostcodeLaravel\Tests\Resources;
+namespace Label84\NederlandPostcode\Laravel\Tests\Resources;
 
 use Label84\NederlandPostcode\DTO\Quota;
+use Label84\NederlandPostcode\Laravel\Tests\TestCase;
 use Label84\NederlandPostcode\NederlandPostcodeClient;
-use Label84\NederlandPostcodeLaravel\Tests\TestCase;
 
 class QuotaResourceTest extends TestCase
 {

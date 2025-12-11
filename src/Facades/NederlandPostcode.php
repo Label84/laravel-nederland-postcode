@@ -1,6 +1,6 @@
 <?php
 
-namespace Label84\NederlandPostcodeLaravel\Facades;
+namespace Label84\NederlandPostcode\Laravel\Facades;
 
 use Illuminate\Support\Facades\Facade;
 use Label84\NederlandPostcode\DTO\Address;
@@ -17,12 +17,12 @@ use Label84\NederlandPostcode\Resources\QuotaResource;
  * @method static AddressesResource addresses()
  * @method static QuotaResource quota()
  *
- * @see \Label84\NederlandPostcodeLaravel\NederlandPostcodeClient
+ * @see \Label84\NederlandPostcode\Laravel\NederlandPostcodeClient
  */
 class NederlandPostcode extends Facade
 {
     protected static function getFacadeAccessor(): string
     {
-        return \Label84\NederlandPostcodeLaravel\NederlandPostcode::class;
+        return \Label84\NederlandPostcode\Laravel\NederlandPostcode::class;
     }
 }

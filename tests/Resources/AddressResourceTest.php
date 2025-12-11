@@ -1,10 +1,10 @@
 <?php
 
-namespace Label84\NederlandPostcodeLaravel\Tests\Resources;
+namespace Label84\Nederland\PostcodeLaravel\Tests\Resources;
 
 use Label84\NederlandPostcode\DTO\AddressCollection;
+use Label84\NederlandPostcode\Laravel\Tests\TestCase;
 use Label84\NederlandPostcode\NederlandPostcodeClient;
-use Label84\NederlandPostcodeLaravel\Tests\TestCase;
 
 class AddressResourceTest extends TestCase
 {

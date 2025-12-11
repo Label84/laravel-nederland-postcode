@@ -20,21 +20,21 @@
     },
     "autoload": {
         "psr-4": {
-            "Label84\\NederlandPostcodeLaravel\\": "src/"
+            "Label84\\NederlandPostcode\\Laravel\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Label84\\NederlandPostcodeLaravel\\Tests\\": "tests"
+            "Label84\\NederlandPostcode\\Laravel\\Tests\\": "tests"
         }
     },
     "extra": {
         "laravel": {
             "providers": [
-                "Label84\\NederlandPostcodeLaravel\\NederlandPostcodeServiceProvider"
+                "Label84\\NederlandPostcode\\Laravel\\NederlandPostcodeServiceProvider"
             ],
             "aliases": {
-                "NederlandPostcode": "Label84\\NederlandPostcodeLaravel\\Facades\\NederlandPostcode"
+                "NederlandPostcode": "Label84\\NederlandPostcode\\Laravel\\Facades\\NederlandPostcode"
             }
         }
     },

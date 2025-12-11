@@ -1,6 +1,6 @@
 <?php
 
-namespace Label84\NederlandPostcodeLaravel;
+namespace Label84\NederlandPostcode\Laravel;
 
 use Illuminate\Support\ServiceProvider;
 

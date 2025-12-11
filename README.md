@@ -33,7 +33,7 @@ composer require label84/laravel-nederland-postcode
 Publish the configuration file:
 
 ```bash
-php artisan vendor:publish --provider="Label84\NederlandPostcodeLaravel\NederlandPostcodeServiceProvider" --tag="config"
+php artisan vendor:publish --provider="Label84\NederlandPostcode\Laravel\NederlandPostcodeServiceProvider" --tag="config"
 ```
 
 Add your API key to your `.env` file:
@@ -61,7 +61,7 @@ To fetch a single address for a given postcode and house number, you can use the
 The `postcode` and `number` parameters are required to fetch a single address.
 
 ```php
-use Label84\NederlandPostcodeLaravel\Facades\NederlandPostcode;
+use Label84\NederlandPostcode\Laravel\Facades\NederlandPostcode;
 
 $address = NederlandPostcode::find(
         postcode: '1118BN',
@@ -99,7 +99,7 @@ To fetch multiple addresses for a given postcode, you can use the `list` method.
 The `postcode` parameter is required. The `number` and `addition` parameters are optional.
 
 ```php
-use Label84\NederlandPostcodeLaravel\Facades\NederlandPostcode;
+use Label84\NederlandPostcode\Laravel\Facades\NederlandPostcode;
 
 $addresses = NederlandPostcode::list(
         postcode: '1118BN',
@@ -152,7 +152,7 @@ The quota endpoint allows you to check your current API usage and limits. This e
 > Values may lag behind the actual usage. They’re cached for up to five minutes, so the `used` and `limit` numbers might not be fully up-to-date.
 
 ```php
-use Label84\NederlandPostcodeLaravel\Facades\NederlandPostcode;
+use Label84\NederlandPostcode\Laravel\Facades\NederlandPostcode;
 
 $quota = NederlandPostcode::usage();
 ```
@@ -171,7 +171,7 @@ Quota {
 The package throws a `NederlandPostcodeException` for any errors encountered during the API request. You can catch this exception to handle errors gracefully:
 
 ```php
-use Label84\NederlandPostcodeLaravel\Exceptions\NederlandPostcodeException;
+use Label84\NederlandPostcode\Laravel\Exceptions\NederlandPostcodeException;
 
 try {
     $addresses = NederlandPostcode::find(

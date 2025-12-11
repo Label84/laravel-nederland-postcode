@@ -1,6 +1,6 @@
 <?php
 
-namespace Label84\NederlandPostcodeLaravel\Tests;
+namespace Label84\NederlandPostcode\Laravel\Tests;
 
 use Label84\NederlandPostcode\DTO\Address;
 use Label84\NederlandPostcode\DTO\AddressCollection;

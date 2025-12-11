@@ -1,15 +1,15 @@
 <?php
 
-namespace Label84\NederlandPostcodeLaravel\Tests;
+namespace Label84\NederlandPostcode\Laravel\Tests;
 
 use Label84\NederlandPostcode\DTO\Address;
 use Label84\NederlandPostcode\DTO\AddressCollection;
 use Label84\NederlandPostcode\DTO\Coordinates;
 use Label84\NederlandPostcode\DTO\Quota;
+use Label84\NederlandPostcode\Laravel\NederlandPostcodeServiceProvider;
 use Label84\NederlandPostcode\NederlandPostcodeClient;
 use Label84\NederlandPostcode\Resources\AddressesResource;
 use Label84\NederlandPostcode\Resources\QuotaResource;
-use Label84\NederlandPostcodeLaravel\NederlandPostcodeServiceProvider;
 
 class TestCase extends \Orchestra\Testbench\TestCase
 {
