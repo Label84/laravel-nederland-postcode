@@ -48,7 +48,7 @@ NEDERLAND_POSTCODE_API_KEY="your_api_key_here"
 
 The address endpoint allows you to fetch address information from the Nederland Postcode API.
 
-You can find addresses using either the `find` method for a single address or the `list` method for multiple addresses. When you provide only the `postcode`, the `list` method will return all addresses associated with that postcode.
+You can search addresses using either the `find` method for a single address or the `list` method for multiple addresses. The `find` method will throw an exception if no address is found or if multiple addresses are found for the given postcode and house number (ie. when the house number has multiple additions like A, B, C, etc.).
 
 The following optional attributes can be requested to be included in the response:
 
@@ -58,7 +58,7 @@ The following optional attributes can be requested to be included in the respons
 
 To fetch a single address for a given postcode and house number, you can use the `find` method.
 
-The `postcode` and `number` parameters are required to fetch a single address.
+The `postcode` and `number` parameters are required. The `addition` parameter is optional.
 
 ```php
 use Label84\NederlandPostcode\Laravel\Facades\NederlandPostcode;
@@ -79,6 +79,7 @@ This will return an `Address` object like this:
 Address {
     postcode: "1118BN",
     number: 800,
+    addition: null,
     street: "Schiphol Boulevard",
     city: "Schiphol",
     municipality: "Haarlemmermeer",
@@ -94,16 +95,16 @@ When no address is found for the given postcode and number, an `AddressNotFoundE
 
 #### Multiple Addresses
 
-To fetch multiple addresses for a given postcode, you can use the `list` method.
+To fetch multiple addresses for a given postcode and house number, you can use the `list` method.
 
-The `postcode` parameter is required. The `number` and `addition` parameters are optional.
+The `postcode` and `number` parameters are required. The `addition` parameter is optional.
 
 ```php
 use Label84\NederlandPostcode\Laravel\Facades\NederlandPostcode;
 
 $addresses = NederlandPostcode::list(
-        postcode: '1118BN',
-        number: null,
+        postcode: '1015CN',
+        number: 10,
         addition: null,
         attributes: [
             'coordinates',
@@ -117,29 +118,57 @@ This will return an `AddressCollection` object like this:
 AddressCollection {
     items: [
         Address {
-            postcode: "1118BN",
-            number: 701,
-            street: "Schiphol Boulevard",
-            city: "Schiphol",
-            municipality: "Haarlemmermeer",
+            postcode: "1015CN",
+            number: 10,
+            addition: 'A',
+            street: "Keizersgracht",
+            city: "Amsterdam",
+            municipality: "Amsterdam",
             province: "Noord-Holland",
             coordinates: Coordinates {
-                latitude: 52.30703569036619,
-                longitude: 4.755174782205992
+                latitude: 52.379401496779124,
+                longitude: 4.889216673725493
             }
         },
         Address {
-            postcode: "1118BN",
-            number: 800,
-            street: "Schiphol Boulevard",
-            city: "Schiphol",
-            municipality: "Haarlemmermeer",
+            postcode: "1015CN",
+            number: 10,
+            addition: 'B',
+            street: "Keizersgracht",
+            city: "Amsterdam",
+            municipality: "Amsterdam",
             province: "Noord-Holland",
             coordinates: Coordinates {
-                latitude: 52.30528553688755,
-                longitude: 4.750645160863609
+                latitude: 52.379401496779124,
+                longitude: 4.889216673725493
             }
-        }
+        },
+        Address {
+            postcode: "1015CN",
+            number: 10,
+            addition: 'C',
+            street: "Keizersgracht",
+            city: "Amsterdam",
+            municipality: "Amsterdam",
+            province: "Noord-Holland",
+            coordinates: Coordinates {
+                latitude: 52.379401496779124,
+                longitude: 4.889216673725493
+            }
+        },
+        Address {
+            postcode: "1015CN",
+            number: 10,
+            addition: 'D',
+            street: "Keizersgracht",
+            city: "Amsterdam",
+            municipality: "Amsterdam",
+            province: "Noord-Holland",
+            coordinates: Coordinates {
+                latitude: 52.379401496779124,
+                longitude: 4.889216673725493
+            }
+        },
     ]
 }
 ```
@@ -149,7 +178,7 @@ AddressCollection {
 The quota endpoint allows you to check your current API usage and limits. This endpoint does not increase your usage quota.
 
 > [!NOTE]
-> Values may lag behind the actual usage. They’re cached for up to five minutes, so the `used` and `limit` numbers might not be fully up-to-date.
+> Values may lag behind the actual usage. They're cached for up to five minutes, so the `used` and `limit` numbers might not be fully up-to-date.
 
 ```php
 use Label84\NederlandPostcode\Laravel\Facades\NederlandPostcode;

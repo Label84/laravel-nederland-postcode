@@ -41,8 +41,8 @@ class NederlandPostcodeClientTest extends TestCase
 
         app(NederlandPostcodeClient::class)
             ->find(
-                postcode: '1118BN',
-                number: 0,
+                postcode: '1015CN',
+                number: 10,
                 addition: null,
             );
     }
@@ -51,13 +51,13 @@ class NederlandPostcodeClientTest extends TestCase
     {
         $result = app(NederlandPostcodeClient::class)
             ->list(
-                postcode: '1118BN',
-                number: null,
+                postcode: '1015CN',
+                number: 10,
                 addition: null,
             );
 
         $this->assertInstanceOf(AddressCollection::class, $result);
-        $this->assertCount(3, $result);
+        $this->assertCount(4, $result);
     }
 
     public function test_usage(): void

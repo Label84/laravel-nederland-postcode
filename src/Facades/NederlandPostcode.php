@@ -11,8 +11,8 @@ use Label84\NederlandPostcode\Resources\AddressesResource;
 use Label84\NederlandPostcode\Resources\QuotaResource;
 
 /**
- * @method static Address find(string $postcode, string $number, ?string $addition = null, array<int|string, string|AddressAttributesEnum> $attributes = [])
- * @method static AddressCollection<Address> list(string $postcode, ?string $number = null, ?string $addition = null, array<int|string, string|AddressAttributesEnum> $attributes = [])
+ * @method static Address find(string $postcode, int $number, ?string $addition = null, array<int|string, string|AddressAttributesEnum> $attributes = [])
+ * @method static AddressCollection<Address> list(string $postcode, int $number, ?string $addition = null, array<int|string, string|AddressAttributesEnum> $attributes = [])
  * @method static Quota usage()
  * @method static AddressesResource addresses()
  * @method static QuotaResource quota()

@@ -51,7 +51,7 @@ class NederlandPostcode
      */
     public function list(
         string $postcode,
-        ?int $number = null,
+        int $number,
         ?string $addition = null,
         array $attributes = []
     ): AddressCollection {

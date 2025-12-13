@@ -27,12 +27,12 @@ class AddressResourceTest extends TestCase
         $result = app(NederlandPostcodeClient::class)
             ->addresses()
             ->get(
-                postcode: '1118BN',
-                number: null,
+                postcode: '1015CN',
+                number: 10,
                 addition: null,
             );
 
         $this->assertInstanceOf(AddressCollection::class, $result);
-        $this->assertCount(3, $result);
+        $this->assertCount(4, $result);
     }
 }

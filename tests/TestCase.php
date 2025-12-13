@@ -32,10 +32,10 @@ class TestCase extends \Orchestra\Testbench\TestCase
         $mockAddresses = $this->createStub(AddressesResource::class);
         $mockAddresses
             ->method('get')
-            ->willReturnCallback(function (string $postcode, ?int $number, ?array $addition, $attributes = []) {
+            ->willReturnCallback(function (string $postcode, int $number, ?array $addition, $attributes = []) {
                 return match (true) {
                     $postcode === '1118BN' && $number === 800 => $this->singleAddressResponse(),
-                    $postcode === '1118BN' && ($number === null || $number === 0) => $this->multipleAddressesResponse(),
+                    $postcode === '1015CN' && $number === 10 => $this->multipleAddressesResponse(),
                     default => new AddressCollection([]),
                 };
             });
@@ -110,45 +110,59 @@ class TestCase extends \Orchestra\Testbench\TestCase
     {
         return new AddressCollection([
             new Address(
-                postcode: '1118BN',
-                number: 701,
-                addition: '',
-                street: 'Schiphol Boulevard',
-                city: 'Schiphol',
-                municipality: 'Haarlemmermeer',
+                postcode: '1015CN',
+                number: 10,
+                addition: 'A',
+                street: 'Keizersgracht',
+                city: 'Amsterdam',
+                municipality: 'Amsterdam',
                 province: 'Noord-Holland',
                 country: 'Nederland',
                 coordinates: new Coordinates(
-                    latitude: 52.30703569036619,
-                    longitude: 4.755174782205992,
+                    latitude: 52.379401496779124,
+                    longitude: 4.889216673725493,
                 ),
             ),
             new Address(
-                postcode: '1118BN',
-                number: 800,
-                addition: '',
-                street: 'Schiphol Boulevard',
-                city: 'Schiphol',
-                municipality: 'Haarlemmermeer',
+                postcode: '1015CN',
+                number: 10,
+                addition: 'B',
+                street: 'Keizersgracht',
+                city: 'Amsterdam',
+                municipality: 'Amsterdam',
                 province: 'Noord-Holland',
                 country: 'Nederland',
                 coordinates: new Coordinates(
-                    latitude: 52.30528553688755,
-                    longitude: 4.750645160863609,
+                    latitude: 52.379401496779124,
+                    longitude: 4.889216673725493,
                 ),
             ),
             new Address(
-                postcode: '1118BN',
-                number: 810,
-                addition: '',
-                street: 'Schiphol Boulevard',
-                city: 'Schiphol',
-                municipality: 'Haarlemmermeer',
+                postcode: '1015CN',
+                number: 10,
+                addition: 'C',
+                street: 'Keizersgracht',
+                city: 'Amsterdam',
+                municipality: 'Amsterdam',
                 province: 'Noord-Holland',
                 country: 'Nederland',
                 coordinates: new Coordinates(
-                    latitude: 52.30556719835437,
-                    longitude: 4.750419372039126,
+                    latitude: 52.379401496779124,
+                    longitude: 4.889216673725493,
+                ),
+            ),
+            new Address(
+                postcode: '1015CN',
+                number: 10,
+                addition: 'D',
+                street: 'Keizersgracht',
+                city: 'Amsterdam',
+                municipality: 'Amsterdam',
+                province: 'Noord-Holland',
+                country: 'Nederland',
+                coordinates: new Coordinates(
+                    latitude: 52.379401496779124,
+                    longitude: 4.889216673725493,
                 ),
             ),
         ]);

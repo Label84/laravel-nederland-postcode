@@ -10,7 +10,7 @@
       }
     ],
     "require": {
-        "label84/php-nederland-postcode": "^1.0"
+        "label84/php-nederland-postcode": "^1.1"
     },
     "require-dev": {
         "laravel/pint": "^1.26",
