@@ -14,6 +14,7 @@ Register for free to obtain a **test API key** at [nederlandpostcode.nl](https:/
   - [Address Endpoint](#address-endpoint)
     - [Single Address](#single-address)
     - [Multiple Addresses](#multiple-addresses)
+  - [Energy Label Endpoint](#energy-label-endpoint)
   - [Quota Endpoint](#quota-endpoint)
 - [Error Handling](#error-handling)
 
@@ -142,33 +143,50 @@ AddressCollection {
                 latitude: 52.379401496779124,
                 longitude: 4.889216673725493
             }
+        }, {
+            ...
         },
-        Address {
-            postcode: "1015CN",
-            number: 10,
-            addition: 'C',
-            street: "Keizersgracht",
-            city: "Amsterdam",
-            municipality: "Amsterdam",
-            province: "Noord-Holland",
-            coordinates: Coordinates {
-                latitude: 52.379401496779124,
-                longitude: 4.889216673725493
-            }
-        },
-        Address {
-            postcode: "1015CN",
-            number: 10,
-            addition: 'D',
-            street: "Keizersgracht",
-            city: "Amsterdam",
-            municipality: "Amsterdam",
-            province: "Noord-Holland",
-            coordinates: Coordinates {
-                latitude: 52.379401496779124,
-                longitude: 4.889216673725493
-            }
-        },
+        ...
+    ]
+}
+```
+
+### Energy Label Endpoint
+
+The energy label endpoint allows you to fetch energy label information for a given postcode and house number (with optional addition).
+
+```php
+use Label84\NederlandPostcode\Laravel\Facades\NederlandPostcode;
+
+$energyLabels = NederlandPostcode::energyLabels()->get(
+    postcode: '1118BN',
+    number: 800,
+    addition: null,
+);
+```
+
+This will return an `EnergyLabelCollection` object like this:
+
+```php
+EnergyLabelCollection {
+    items: [
+        EnergyLabel {
+            postcode: "1118BN",
+            number: 800,
+            addition: null,
+            street: "Schiphol Boulevard",
+            city: "Schiphol",
+            inspectionDate: DateTime("2022-08-02"),
+            validUntilDate: DateTime("2032-08-02"),
+            constructionType: "utiliteitsbouw",
+            buildingType: null,
+            energyLabel: "A+++",
+            maxEnergyDemand: 98.4,
+            maxFossilEnergyDemand: 55.48,
+            minRenewableShare: 55.3
+        }, {
+            ...
+        }
     ]
 }
 ```
