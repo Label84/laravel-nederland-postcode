@@ -2,11 +2,20 @@
 
 ![Nederland Postcode API](./docs/nederlandpostcodeapi.png)
 
-Nederland Postcode Laravel makes it easy to integrate Dutch address validations into your Laravel application using the [Nederland Postcode API](https://nederlandpostcode.nl).
+Nederland Postcode Laravel makes it easy to integrate Dutch address validation and energy label lookups into your Laravel application using the [Nederland Postcode API](https://nederlandpostcode.nl).
 
-This is a Laravel wrapper for the [Nederland Postcode PHP](https://github.com/Label84/php-nederland-postcode) package.
+**Key features:**
 
-Register for free to obtain a **test API key** at [nederlandpostcode.nl](https://nederlandpostcode.nl) to get started.
+- Validate and retrieve Dutch addresses by postcode and house number
+- Retrieve coordinates (latitude and longitude) for addresses
+- Fetch energy labels (energielabel) for residential and commercial buildings
+- Check your API usage quota
+
+This package is a Laravel wrapper for [Nederland Postcode PHP](https://github.com/Label84/php-nederland-postcode).
+
+Register for free at [nederlandpostcode.nl](https://nederlandpostcode.nl) to obtain your **test API key**.
+
+## Table of Contents
 
 - [Requirements](#requirements)
 - [Installation](#installation)
