@@ -10,6 +10,7 @@ use Label84\NederlandPostcode\Exceptions\AddressNotFoundException;
 use Label84\NederlandPostcode\Exceptions\MultipleAddressesFoundException;
 use Label84\NederlandPostcode\NederlandPostcodeClient as CoreClient;
 use Label84\NederlandPostcode\Resources\AddressesResource;
+use Label84\NederlandPostcode\Resources\EnergyLabelResource;
 use Label84\NederlandPostcode\Resources\QuotaResource;
 
 class NederlandPostcode
@@ -36,6 +37,11 @@ class NederlandPostcode
     public function addresses(): AddressesResource
     {
         return new AddressesResource($this->core);
+    }
+
+    public function energyLabels(): EnergyLabelResource
+    {
+        return new EnergyLabelResource($this->core);
     }
 
     public function quota(): QuotaResource

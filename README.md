@@ -2,11 +2,20 @@
 
 ![Nederland Postcode API](./docs/nederlandpostcodeapi.png)
 
-Nederland Postcode Laravel makes it easy to integrate Dutch address validations into your Laravel application using the [Nederland Postcode API](https://nederlandpostcode.nl).
+Nederland Postcode Laravel makes it easy to integrate Dutch address validation and energy label lookups into your Laravel application using the [Nederland Postcode API](https://nederlandpostcode.nl).
 
-This is a Laravel wrapper for the [Nederland Postcode PHP](https://github.com/Label84/php-nederland-postcode) package.
+**Key features:**
 
-Register for free to obtain a **test API key** at [nederlandpostcode.nl](https://nederlandpostcode.nl) to get started.
+- Validate and retrieve Dutch addresses by postcode and house number
+- Retrieve coordinates (latitude and longitude) for addresses
+- Fetch energy labels (energielabel) for residential and commercial buildings
+- Check your API usage quota
+
+This package is a Laravel wrapper for [Nederland Postcode PHP](https://github.com/Label84/php-nederland-postcode).
+
+Register for free at [nederlandpostcode.nl](https://nederlandpostcode.nl) to obtain your **test API key**.
+
+## Table of Contents
 
 - [Requirements](#requirements)
 - [Installation](#installation)
@@ -14,6 +23,7 @@ Register for free to obtain a **test API key** at [nederlandpostcode.nl](https:/
   - [Address Endpoint](#address-endpoint)
     - [Single Address](#single-address)
     - [Multiple Addresses](#multiple-addresses)
+  - [Energy Label Endpoint](#energy-label-endpoint)
   - [Quota Endpoint](#quota-endpoint)
 - [Error Handling](#error-handling)
 
@@ -142,33 +152,50 @@ AddressCollection {
                 latitude: 52.379401496779124,
                 longitude: 4.889216673725493
             }
+        }, {
+            ...
         },
-        Address {
-            postcode: "1015CN",
-            number: 10,
-            addition: 'C',
-            street: "Keizersgracht",
-            city: "Amsterdam",
-            municipality: "Amsterdam",
-            province: "Noord-Holland",
-            coordinates: Coordinates {
-                latitude: 52.379401496779124,
-                longitude: 4.889216673725493
-            }
-        },
-        Address {
-            postcode: "1015CN",
-            number: 10,
-            addition: 'D',
-            street: "Keizersgracht",
-            city: "Amsterdam",
-            municipality: "Amsterdam",
-            province: "Noord-Holland",
-            coordinates: Coordinates {
-                latitude: 52.379401496779124,
-                longitude: 4.889216673725493
-            }
-        },
+        ...
+    ]
+}
+```
+
+### Energy Label Endpoint
+
+The energy label endpoint allows you to fetch energy label information for a given postcode and house number (with optional addition).
+
+```php
+use Label84\NederlandPostcode\Laravel\Facades\NederlandPostcode;
+
+$energyLabels = NederlandPostcode::energyLabels()->get(
+    postcode: '1118BN',
+    number: 800,
+    addition: null,
+);
+```
+
+This will return an `EnergyLabelCollection` object like this:
+
+```php
+EnergyLabelCollection {
+    items: [
+        EnergyLabel {
+            postcode: "1118BN",
+            number: 800,
+            addition: null,
+            street: "Schiphol Boulevard",
+            city: "Schiphol",
+            inspectionDate: DateTime("2022-08-02"),
+            validUntilDate: DateTime("2032-08-02"),
+            constructionType: "utiliteitsbouw",
+            buildingType: null,
+            energyLabel: "A+++",
+            maxEnergyDemand: 98.4,
+            maxFossilEnergyDemand: 55.48,
+            minRenewableShare: 55.3
+        }, {
+            ...
+        }
     ]
 }
 ```
