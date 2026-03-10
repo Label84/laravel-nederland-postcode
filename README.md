@@ -153,7 +153,8 @@ AddressCollection {
             coordinates: Coordinates {
                 latitude: 52.379401496779124,
                 longitude: 4.889216673725493
-            }
+            },
+            ...
         },
         Address {
             postcode: "1015CN",
@@ -166,7 +167,8 @@ AddressCollection {
             coordinates: Coordinates {
                 latitude: 52.379401496779124,
                 longitude: 4.889216673725493
-            }
+            },
+            ...
         }, {
             ...
         },
