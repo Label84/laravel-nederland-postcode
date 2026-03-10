@@ -63,6 +63,12 @@ You can search addresses using either the `find` method for a single address or 
 The following optional attributes can be requested to be included in the response:
 
 - `coordinates`: Includes latitude and longitude of the address.
+- `district`: Includes the official and name of the district that the address belongs to.
+- `function`: Includes the function of the address (e.g. residential, commercial, healthcare, etc.).
+- `location_status`: Includes the location status of the address (e.g. active, in development, etc.).
+- `property_status`: Includes the property status of the address (e.g. in use, under construction, etc.).
+- `surface_area`: Includes the surface area of the property in square meters.
+- `construction_year`: Includes the construction year of the property.
 
 #### Single Address
 
@@ -78,7 +84,7 @@ $address = NederlandPostcode::find(
         number: 800,
         addition: null,
         attributes: [
-            'coordinates',
+            AddressAttributesEnum::COORDINATES,
         ]
     );
 ```
@@ -97,7 +103,16 @@ Address {
     coordinates: Coordinates {
         latitude: 52.30528553688755,
         longitude: 4.750645160863609
-    }
+    },
+    district: District {
+        official: "Schiphol",
+        name: "Schiphol"
+    },
+    function: "kantoorfunctie",
+    location_status: "verblijfsobject in gebruik",
+    property_status: "pand in gebruik",
+    surface_area: 10398.0,
+    construction_year: 2019
 }
 ```
 
@@ -138,7 +153,8 @@ AddressCollection {
             coordinates: Coordinates {
                 latitude: 52.379401496779124,
                 longitude: 4.889216673725493
-            }
+            },
+            ...
         },
         Address {
             postcode: "1015CN",
@@ -151,7 +167,8 @@ AddressCollection {
             coordinates: Coordinates {
                 latitude: 52.379401496779124,
                 longitude: 4.889216673725493
-            }
+            },
+            ...
         }, {
             ...
         },
