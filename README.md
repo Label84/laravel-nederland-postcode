@@ -17,7 +17,7 @@ Register for free at [nederlandpostcode.nl](https://nederlandpostcode.nl) to obt
 
 ## Table of Contents
 
-- [Requirements](#requirements)
+- [Laravel Support](#laravel-support)
 - [Installation](#installation)
 - [Usage](#usage)
   - [Address Endpoint](#address-endpoint)
@@ -27,10 +27,12 @@ Register for free at [nederlandpostcode.nl](https://nederlandpostcode.nl) to obt
   - [Quota Endpoint](#quota-endpoint)
 - [Error Handling](#error-handling)
 
-## Requirements
+## Laravel Support
 
-- Laravel 12.x
-- PHP 8.2+
+| Version | Release |
+|---------|---------|
+| 13.x    | ^1.3    |
+| 12.x    | ^1.3    |
 
 ## Installation
 

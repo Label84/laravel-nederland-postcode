@@ -8,6 +8,7 @@ use Label84\NederlandPostcode\DTO\Quota;
 use Label84\NederlandPostcode\Enums\AddressAttributesEnum;
 use Label84\NederlandPostcode\Exceptions\AddressNotFoundException;
 use Label84\NederlandPostcode\Exceptions\MultipleAddressesFoundException;
+use Label84\NederlandPostcode\NederlandPostcodeClient;
 use Label84\NederlandPostcode\NederlandPostcodeClient as CoreClient;
 use Label84\NederlandPostcode\Resources\AddressesResource;
 use Label84\NederlandPostcode\Resources\EnergyLabelResource;
@@ -22,11 +23,11 @@ class NederlandPostcode
      */
     public function __construct(
         string $key,
-        string $baseUrl = \Label84\NederlandPostcode\NederlandPostcodeClient::DEFAULT_BASE_URL,
+        string $baseUrl = NederlandPostcodeClient::DEFAULT_BASE_URL,
         int $timeout = 5,
         array $headers = []
     ) {
-        $this->core = new \Label84\NederlandPostcode\NederlandPostcodeClient(
+        $this->core = new NederlandPostcodeClient(
             key: $key,
             baseUrl: $baseUrl,
             timeout: $timeout,
