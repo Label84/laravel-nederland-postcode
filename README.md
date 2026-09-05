@@ -31,8 +31,8 @@ Register for free at [nederlandpostcode.nl](https://nederlandpostcode.nl) to obt
 
 | Version | Release |
 |---------|---------|
-| 13.x    | ^1.5    |
-| 12.x    | ^1.5    |
+| 13.x    | ^1.4    |
+| 12.x    | ^1.4    |
 
 ## Installation
 
