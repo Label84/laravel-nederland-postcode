@@ -31,8 +31,8 @@ Register for free at [nederlandpostcode.nl](https://nederlandpostcode.nl) to obt
 
 | Version | Release |
 |---------|---------|
-| 13.x    | ^1.3    |
-| 12.x    | ^1.3    |
+| 13.x    | ^1.5    |
+| 12.x    | ^1.5    |
 
 ## Installation
 
@@ -66,6 +66,7 @@ The following optional attributes can be requested to be included in the respons
 
 - `coordinates`: Includes latitude and longitude of the address.
 - `district`: Includes the official and name of the district that the address belongs to.
+- `neighborhood`: Includes the official name of the neighborhood that the address belongs to.
 - `function`: Includes the function of the address (e.g. residential, commercial, healthcare, etc.).
 - `location_status`: Includes the location status of the address (e.g. active, in development, etc.).
 - `property_status`: Includes the property status of the address (e.g. in use, under construction, etc.).
@@ -204,14 +205,31 @@ EnergyLabelCollection {
             addition: null,
             street: "Schiphol Boulevard",
             city: "Schiphol",
+            registrationDate: DateTime("2022-08-30"),
             inspectionDate: DateTime("2022-08-02"),
             validUntilDate: DateTime("2032-08-02"),
             constructionType: "utiliteitsbouw",
             buildingType: null,
             energyLabel: "A+++",
-            maxEnergyDemand: 98.4,
-            maxFossilEnergyDemand: 55.48,
-            minRenewableShare: 55.3
+            calculationType: "NTA 8800:2022 (basisopname utiliteitsbouw)",
+            inspectionType: "basis",
+            status: "bestaand",
+            constructionYear: 2019,
+            usageAreaThermalZone: 5648.39,
+            compactness: 1.16,
+            energyDemand: 98.4,
+            energyDemandRequirement: null,
+            primaryFossilEnergy: 55.48,
+            primaryFossilEnergyRequirement: null,
+            primaryFossilEnergyEmg: null,
+            renewableShare: 55.3,
+            renewableShareRequirement: null,
+            renewableShareEmg: null,
+            calculatedEnergyConsumption: 55.48,
+            heatDemand: 55.02,
+            calculatedCo2Emission: 13.01,
+            temperatureExcess: 0,
+            temperatureExcessRequirement: null
         }, {
             ...
         }
